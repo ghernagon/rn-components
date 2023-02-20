@@ -1,22 +1,18 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-
 import {NavigationController} from './src/navigation/NavigationController';
+import {ThemeProvider} from './src/context/theme/ThemeContext';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      {/* <SafeAreaView style={styles.container}> */}
+    <AppState>
       <NavigationController />
-      {/* </SafeAreaView> */}
-    </NavigationContainer>
+    </AppState>
   );
 };
 
-export default App;
+const AppState = ({children}: any) => {
+  return <ThemeProvider>{children}</ThemeProvider>;
+};
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-// });
+export default App;

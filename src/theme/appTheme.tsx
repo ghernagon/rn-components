@@ -9,7 +9,3 @@ export const appTheme = StyleSheet.create({
     marginHorizontal: 20,
   },
 });
-
-export const colors = {
-  primary: '#5856D6',
-};

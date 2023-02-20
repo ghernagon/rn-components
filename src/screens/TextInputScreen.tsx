@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {CustomSwitch} from '../components/CustomSwitch';
 import {HeaderTitle} from '../components/HeaderTitle';
+import {ThemeContext} from '../context/theme/ThemeContext';
 import {useForm} from '../hooks/useForm';
 import {appTheme} from '../theme/appTheme';
 
@@ -36,6 +37,10 @@ export const TextInputScreen = () => {
     isSubscribed: false,
   });
 
+  const {
+    theme: {colors, borderColor, dividerColor, currentTheme},
+  } = useContext(ThemeContext);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -44,23 +49,37 @@ export const TextInputScreen = () => {
           <View style={appTheme.globalMargin}>
             <HeaderTitle title="TextInputs" />
             <TextInput
-              style={styles.input}
+              style={{
+                ...styles.input,
+                color: colors.text,
+                borderColor: borderColor,
+              }}
               placeholder="Your name"
               autoCorrect={false}
               autoCapitalize="words"
               onChangeText={value => onChange(value, 'name')}
+              placeholderTextColor={dividerColor}
+              keyboardAppearance={currentTheme}
             />
             <TextInput
-              style={styles.input}
+              style={{
+                ...styles.input,
+                color: colors.text,
+                borderColor: borderColor,
+              }}
               placeholder="Your Email"
               autoCorrect={false}
               autoCapitalize="none"
               onChangeText={value => onChange(value, 'email')}
               keyboardType="email-address"
+              placeholderTextColor={dividerColor}
+              keyboardAppearance={currentTheme}
             />
 
             <View style={styles.subscribe}>
-              <Text style={styles.switchText}>Subscribe</Text>
+              <Text style={{...styles.switchText, color: colors.text}}>
+                Subscribe
+              </Text>
               <CustomSwitch
                 isOn={formState.isSubscribed}
                 onChange={val => onChange(val, 'isSubscribed')}
@@ -72,10 +91,16 @@ export const TextInputScreen = () => {
             <HeaderTitle title={JSON.stringify(formState, null, 3)} />
 
             <TextInput
-              style={styles.input}
+              style={{
+                ...styles.input,
+                color: colors.text,
+                borderColor: borderColor,
+              }}
               placeholder="Your phone"
               onChangeText={value => onChange(value, 'phone')}
               keyboardType="phone-pad"
+              placeholderTextColor={dividerColor}
+              keyboardAppearance={currentTheme}
             />
             <View style={styles.spacer} />
           </View>
@@ -89,7 +114,6 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: 'rgba(0, 0, 0, 0.3)',
     height: 50,
     paddingHorizontal: 10,
     marginVertical: 10,

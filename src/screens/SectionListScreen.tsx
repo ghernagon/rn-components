@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, {useContext} from 'react';
 import {SectionList, StyleSheet, Text, View} from 'react-native';
 import {FlatListSeparator} from '../components/FlatListSeparator';
 import {HeaderTitle} from '../components/HeaderTitle';
+import {ThemeContext} from '../context/theme/ThemeContext';
 import {appTheme} from '../theme/appTheme';
 
 interface Casas {
@@ -59,11 +60,17 @@ const data: Casas[] = [
 ];
 
 export const SectionListScreen = () => {
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
+
   return (
     <View style={[appTheme.globalMargin, styles.container]}>
       <SectionList
         sections={data}
-        renderItem={({item}) => <Text>{item}</Text>}
+        renderItem={({item}) => (
+          <Text style={{color: colors.text}}>{item}</Text>
+        )}
         keyExtractor={(item, index) => item + index}
         ListHeaderComponent={() => <HeaderTitle title="Section List" />}
         stickySectionHeadersEnabled={true} // Android
@@ -73,7 +80,7 @@ export const SectionListScreen = () => {
           </View>
         )}
         renderSectionHeader={({section}) => (
-          <View style={styles.sectionHeader}>
+          <View style={{backgroundColor: colors.background}}>
             <HeaderTitle title={section.casa} />
           </View>
         )}
@@ -90,9 +97,6 @@ export const SectionListScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  sectionHeader: {
-    backgroundColor: 'white',
   },
   listFooter: {
     marginBottom: 70,

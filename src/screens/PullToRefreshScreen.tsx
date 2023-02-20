@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ScrollView, View, RefreshControl} from 'react-native';
 import {HeaderTitle} from '../components/HeaderTitle';
-import {appTheme, colors} from '../theme/appTheme';
+import {ThemeContext} from '../context/theme/ThemeContext';
+import {appTheme} from '../theme/appTheme';
 
 export const PullToRefreshScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -17,6 +18,10 @@ export const PullToRefreshScreen = () => {
     }, 3500);
   };
 
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
+
   return (
     <ScrollView
       refreshControl={
@@ -27,9 +32,9 @@ export const PullToRefreshScreen = () => {
           progressBackgroundColor={colors.primary} // Android
           colors={['white', 'red', 'orange']} // Android
           style={{backgroundColor: colors.primary}} // iOS
-          tintColor={'white'} // iOS
+          tintColor={colors.text} // iOS
           title="Refreshing"
-          titleColor="white"
+          titleColor={colors.text}
         />
       }>
       <View style={appTheme.globalMargin}>

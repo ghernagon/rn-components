@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Button, Modal, StyleSheet, Text, View} from 'react-native';
+
 import {HeaderTitle} from '../components/HeaderTitle';
 import {appTheme} from '../theme/appTheme';
 
 export const ModalScreen = () => {
   const [isVisible, setisVisible] = useState(false);
-
   return (
     <View style={appTheme.globalMargin}>
       <HeaderTitle title="Modals" />
@@ -16,8 +16,8 @@ export const ModalScreen = () => {
         {/* Dark Background */}
         <View style={styles.modalContainer}>
           {/* Modal Content */}
-          <View style={styles.modal}>
-            <HeaderTitle title="Modal" />
+          <View style={{...styles.modal}}>
+            <Text style={styles.modalTitle}>Modal</Text>
             <Text style={styles.modalBody}>Modal Body</Text>
             <Button title="Close" onPress={() => setisVisible(false)} />
           </View>
@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
   },
   modal: {
     backgroundColor: 'white',

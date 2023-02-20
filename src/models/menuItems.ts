@@ -53,7 +53,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     name: 'Themes',
-    icon: 'download-outline',
+    icon: 'flask-outline',
     component: 'ThemeScreen',
   },
 ];

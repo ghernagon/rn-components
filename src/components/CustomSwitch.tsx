@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Switch} from 'react-native';
-import {colors} from '../theme/appTheme';
+import {ThemeContext} from '../context/theme/ThemeContext';
 
 type Props = {
   isOn: boolean;
@@ -8,6 +8,9 @@ type Props = {
 };
 
 export const CustomSwitch = ({isOn, onChange}: Props) => {
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
   const [isEnabled, setIsEnabled] = useState(isOn);
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);

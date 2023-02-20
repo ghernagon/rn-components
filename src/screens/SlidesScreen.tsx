@@ -1,5 +1,5 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {
   Animated,
   Dimensions,
@@ -13,9 +13,8 @@ import {ImageSourcePropType, SafeAreaView} from 'react-native';
 
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {ThemeContext} from '../context/theme/ThemeContext';
 import {useAnimation} from '../hooks/useAnimation';
-
-import {colors} from '../theme/appTheme';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -46,6 +45,10 @@ const items: Slide[] = [
 interface Props extends StackScreenProps<any, any> {}
 
 export const SlidesScreen = ({navigation}: Props) => {
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
+
   const [activeIndex, setActiveIndex] = useState(0);
   // const [showNavigationButton, setShowNavigationButton] = useState(false);
   const showNavigationButton = useRef(false);
@@ -62,10 +65,15 @@ export const SlidesScreen = ({navigation}: Props) => {
 
   const renderItem = (item: Slide) => {
     return (
-      <View style={styles.sliderContainer}>
+      <View
+        style={{...styles.sliderContainer, backgroundColor: colors.background}}>
         <Image source={item.img} style={styles.itemImage} />
-        <Text style={styles.itemTitle}>{item.title}</Text>
-        <Text style={styles.itemDescription}>{item.desc}</Text>
+        <Text style={{...styles.itemTitle, color: colors.primary}}>
+          {item.title}
+        </Text>
+        <Text style={{...styles.itemDescription, color: colors.text}}>
+          {item.desc}
+        </Text>
       </View>
     );
   };
@@ -96,7 +104,7 @@ export const SlidesScreen = ({navigation}: Props) => {
         <Pagination
           dotsLength={items.length}
           activeDotIndex={activeIndex}
-          dotStyle={styles.paginationDots}
+          dotStyle={{...styles.paginationDots, backgroundColor: colors.primary}}
           containerStyle={
             {
               // backgroundColor: 'red',
@@ -110,7 +118,10 @@ export const SlidesScreen = ({navigation}: Props) => {
         {/* {showNavigationButton && ( */}
         <Animated.View style={{opacity}}>
           <TouchableOpacity
-            style={styles.navigationButton}
+            style={{
+              ...styles.navigationButton,
+              backgroundColor: colors.primary,
+            }}
             activeOpacity={0.9}
             onPress={() => {
               if (showNavigationButton.current) {
@@ -134,7 +145,6 @@ const styles = StyleSheet.create({
   },
   sliderContainer: {
     flex: 1,
-    backgroundColor: 'white',
     borderRadius: 5,
     padding: 40,
     justifyContent: 'center',
@@ -142,7 +152,6 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: colors.primary,
   },
   itemDescription: {
     fontSize: 16,
@@ -162,11 +171,9 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 10,
-    backgroundColor: colors.primary,
   },
   navigationButton: {
     flexDirection: 'row',
-    backgroundColor: colors.primary,
     width: 120,
     height: 50,
     borderRadius: 10,

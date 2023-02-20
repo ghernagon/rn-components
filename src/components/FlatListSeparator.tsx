@@ -1,8 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
+import {ThemeContext} from '../context/theme/ThemeContext';
 
 export const FlatListSeparator = () => {
-  return <View style={styles.menuItemSeparator} />;
+  const {
+    theme: {dividerColor},
+  } = useContext(ThemeContext);
+
+  return (
+    <View
+      style={{...styles.menuItemSeparator, borderBottomColor: dividerColor}}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
